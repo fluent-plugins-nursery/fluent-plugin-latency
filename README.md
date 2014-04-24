@@ -4,19 +4,19 @@
 
 Fluentd plugin to measure latency until receiving the messages. 
 
-## How It Works
+## What is this for?
 
-Fluentd messages include the time attribute which expresses the time when the message is created, or the time when written in application logs.
-
-This plugin takes the difference between the current time and the time attribute to obtain the latency. 
-
-## What Is It For?
-
-This plugin is working very nice to investigate the network latency, in addition, the blocking situation of input plugins.
+This plugin is to investigate the network latency, in addition, the blocking situation of input plugins.
 
 In the Fluentd mechanism, input plugins usually blocks and will not receive a new data until the previous data processing finishes.
 
-By seeing the latency, you can easily find how long the blocking situation occur. 
+By seeing the latency, you can easily find how long the blocking situation is occuring.
+
+## How this works
+
+Fluentd messages include the time attribute which expresses the time of when the message is created, or when it is written in application logs.
+
+This plugin takes the difference between the current time and the time attribute to obtain the latency. 
 
 ## Installation
 
@@ -27,7 +27,7 @@ Use RubyGems:
 ## Configuration
 
 Following example measures the max and average latency until receiving messages. 
-Note that this example uses [fluent-plugin-reemit](https://github.com/sonots/fluent-plugin-reemit) to capture all messages once to measure latencies and re-emit. 
+Note that this example uses [fluent-plugin-reemit](https://github.com/sonots/fluent-plugin-reemit) to capture all messages once, measure latencies, and then re-emit. 
 
 ```apache
 <source>
@@ -35,6 +35,12 @@ Note that this example uses [fluent-plugin-reemit](https://github.com/sonots/flu
   port 24224
 </source>
 
+# Latency plugin output comes here
+<match latency>
+  type stdout
+</match>
+
+# All messages come here once. Measure latencies and re-emit
 <match **>
   type copy
   <store>
@@ -47,8 +53,9 @@ Note that this example uses [fluent-plugin-reemit](https://github.com/sonots/flu
   </store>
 </match>
 
+# Whatever you want to do
 <match **>
-  type stdout # whatever you want to do
+  type stdout
 </match>
 ```
 
@@ -68,7 +75,7 @@ where `max` and `avg` are the maximum and average latency, and `num` is the numb
 
 * tag
 
-    The output tag name. Default is `elapsed`
+    The output tag name. Default is `latency`
 
 ## ChangeLog
 
