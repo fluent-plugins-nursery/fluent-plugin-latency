@@ -39,6 +39,11 @@ Following example measures the max and average latency until receiving messages.
   type stdout
 </match>
 
+# Whatever you want to do
+<match rewrite.**>
+  type stdout
+</match>
+
 # All messages come here once. 
 <match **>
   type copy
@@ -51,11 +56,6 @@ Following example measures the max and average latency until receiving messages.
     type rewrite
     add_prefix rewrite
   </store>
-</match>
-
-# Whatever you want to do
-<match rewrite.**>
-  type stdout
 </match>
 ```
 
