@@ -27,7 +27,6 @@ Use RubyGems:
 ## Configuration
 
 Following example measures the max and average latency until receiving messages. 
-Note that this example uses [fluent-plugin-reemit](https://github.com/sonots/fluent-plugin-reemit) to capture all messages once, measure latencies, and then re-emit. 
 
 ```apache
 <source>
@@ -40,7 +39,7 @@ Note that this example uses [fluent-plugin-reemit](https://github.com/sonots/flu
   type stdout
 </match>
 
-# All messages come here once. Measure latencies and re-emit
+# All messages come here once. 
 <match **>
   type copy
   <store>
@@ -49,12 +48,13 @@ Note that this example uses [fluent-plugin-reemit](https://github.com/sonots/flu
     interval 60
   </store>
   <store>
-    type reemit
+    type rewrite
+    add_prefix rewrite
   </store>
 </match>
 
 # Whatever you want to do
-<match **>
+<match rewrite.**>
   type stdout
 </match>
 ```
