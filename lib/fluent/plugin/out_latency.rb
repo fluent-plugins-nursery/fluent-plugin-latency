@@ -1,5 +1,5 @@
 module Fluent
-  class LatencyOutput < MultiOutput
+  class LatencyOutput < Output
     Plugin.register_output('latency', self)
 
     # To support log_level option implemented by Fluentd v0.10.43
