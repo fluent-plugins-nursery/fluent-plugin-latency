@@ -7,6 +7,11 @@ module Fluent
       define_method("log") { $log }
     end
 
+    # Define `router` method of v0.12 to support v0.10 or earlier
+    unless method_defined?(:router)
+      define_method("router") { Fluent::Engine }
+    end
+
     config_param :tag, :string, :default => 'latency'
     config_param :interval, :time, :default => 60
 
@@ -57,7 +62,7 @@ module Fluent
       max = num == 0 ? 0 : latency.max
       avg = num == 0 ? 0 : latency.map(&:to_f).inject(:+) / num.to_f
       message = {"max" => max, "avg" => avg, "num" => num}
-      Engine.emit(@tag, Engine.now, message)
+      router.emit(@tag, Engine.now, message)
     end
   end
 end
