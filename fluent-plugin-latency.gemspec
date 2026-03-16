@@ -10,7 +10,6 @@ Gem::Specification.new do |gem|
   gem.description = "Fluentd plugin to measure latency until receiving the messages"
   gem.summary     = gem.description
   gem.licenses    = ["MIT"]
-  gem.has_rdoc    = false
 
   gem.files       = `git ls-files`.split("\n")
   gem.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
